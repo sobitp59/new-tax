@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Calculator, Table } from "lucide-react"
+import { Table } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export default function Navbar() {
