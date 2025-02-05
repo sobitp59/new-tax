@@ -4,7 +4,6 @@ import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Switch } from "@/components/ui/switch"
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts"
 
 import {
@@ -33,13 +32,12 @@ const CHUNK_SIZE = 400000
 const STANDARD_DEDUCTION = 75000
 
 const calculateTax = (
-  income: number,
-  isSalaried: boolean,
+  income: number
 ): {
   calculation: string
   totalTax: number
 } => {
-  const taxableIncome = isSalaried ? Math.max(0, income - STANDARD_DEDUCTION) : income
+  const taxableIncome = Math.max(0, income - STANDARD_DEDUCTION)
   let remainingIncome = taxableIncome
   let calculation = ""
   let totalTax = 0
@@ -70,7 +68,7 @@ const calculateTax = (
     const chunk15 = Math.min(CHUNK_SIZE, remainingIncome)
     remainingIncome -= chunk15
     totalTax += chunk15 * 0.15
-    calculation += ` + (${Math.ceil(chunk15 / 100000)}L * 15%)`
+    calculation += ` + (${(chunk15 / 100000)}L * 15%)`
   }
 
   // Next 4L (20%)
@@ -78,8 +76,28 @@ const calculateTax = (
     const chunk20 = Math.min(CHUNK_SIZE, remainingIncome)
     remainingIncome -= chunk20
     totalTax += chunk20 * 0.2
-    calculation += ` + (${Math.ceil(chunk20 / 100000)}L * 20%)`
+    calculation += ` + (${(chunk20 / 100000)}L * 20%)`
   }
+  
+  // Next 4L (25%)
+  if (remainingIncome > 0) {
+    const chunk25 = Math.min(CHUNK_SIZE, remainingIncome)
+    remainingIncome -= chunk25
+    totalTax += chunk25 * 0.25
+    calculation += ` + (${(chunk25 / 100000)}L * 25%)`
+  }
+
+
+
+  // Remaining Amount (30%)
+  if (remainingIncome > 0) {
+    const chunk30 = remainingIncome
+    remainingIncome -= chunk30
+    totalTax += chunk30 * 0.3
+    calculation += ` + (${(chunk30 / 100000)}L * 30%)`
+  }
+
+
 
   // Apply rebate for income up to 12L
   if (taxableIncome <= 1200000) {
@@ -90,15 +108,20 @@ const calculateTax = (
     }
   }
 
-  return { calculation, totalTax }
+
+  // if(taxableIncome > 1200000 && taxableIncome < 1275000){
+  //   totalTax = totalTax - (taxableIncome - 1200000) * 0.04
+    
+  // }
+
+  return { calculation, totalTax : (taxableIncome > 1200000 && taxableIncome < 1275000) ? (Number(totalTax) - (Number(totalTax) - Number((taxableIncome - 1200000)))) + (Number(totalTax) -  (Number(totalTax) - Number((taxableIncome - 1200000)))) * 0.04 : Number(totalTax) + Number(totalTax * 0.04) }
 }
 
 export default function Calculator() {
   const [income, setIncome] = useState<string>("")
-  const [isSalaried, setIsSalaried] = useState(false)
 
   const numericIncome = Number(income) || 0
-  const { calculation, totalTax } = calculateTax(numericIncome, isSalaried)
+  const { calculation, totalTax } = calculateTax(numericIncome)
 
   const chartData = [
     { name: "Taxable Income", value: Number(income) - STANDARD_DEDUCTION },
