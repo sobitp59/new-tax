@@ -5,7 +5,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 
 export const metadata: Metadata = {
-  title: "Taxmate",
+  title: "Taxmate - Your Tax Calculator",
   description: "Taxmate - Simplify, Calculate, Save.",
 };
 
@@ -17,9 +17,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} antialiased`}
+        className={`${inter.className} antialiased `}
       >
         {children}
+
+        
       </body>
     </html>
   );
