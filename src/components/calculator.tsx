@@ -145,7 +145,7 @@ const calculateTaxNewRegimeolD = (income: number) => {
 }
 
 
-const calculateTaxNewRegime = (income: Number) => {
+const calculateTaxNewRegime = (income: number) => {
   const taxableIncome = Math.max(0, Number(income) - STANDARD_DEDUCTION_NEW_REGIME)
 
 

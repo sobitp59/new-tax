@@ -6,19 +6,6 @@ import { Button } from "@/components/ui/button"
 import { DownloadIcon, FileDown } from "lucide-react"
 
 
-interface DownloadReportProps {
-  income: number
-  effectiveIncome: number
-  newRegime: {
-    calculation: string
-    totalTax: number
-  }
-  oldRegime: {
-    calculation: string
-    totalTax: number
-  }
-}
-
 export default function DownloadReport() {
 
 
