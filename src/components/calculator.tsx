@@ -300,6 +300,32 @@ export default function Calculator() {
     others: '',
   });
 
+  interface DeductionInput {
+    lifeInsurancePremium: string;
+    publicProvidentFund: string;
+    contributionToProvidentFund: string;
+    taxSavingFixedDeposit: string;
+    repaymentOfPrincipalOnHousingLoan: string;
+    ulipTaxSavingInvestmentPlans: string;
+    equityLinkedSavingsSchemes: string;
+    employeeContributionToNpsUs80ccd1: string;
+    tuitionFees: string;
+  }
+  
+  interface Deduction80DInput {
+    selfAndFamily: string;
+    preventiveCheckup: string;
+    parentsBelow60Years: string;
+    parentsAbove60Years: string;
+  }
+  
+  interface DeductionOthersInput {
+    hraUs1013A: string;
+    employeeContributionToNpsUs80ccd1B: string;
+    savingsAccountInterestSection80tta: string;
+    others: string;
+  }
+
 
   // MAX DEDUCTIONS - 1.5L
   const [deductions80C, setDeductions80C] = useState({
@@ -340,7 +366,10 @@ export default function Calculator() {
     return totalIncome;
   };
 
-  const calculateDeduction = (deductionDetails: any) => {
+  type DeductionDetails = DeductionInput | Deduction80DInput | DeductionOthersInput;
+
+
+  const calculateDeduction = (deductionDetails: DeductionDetails) => {
     let totalDeduction = 0;
     for (const key in deductionDetails) {
       const deductionValue = Number(deductionDetails[key as keyof DeductionDetails]) || 0;
