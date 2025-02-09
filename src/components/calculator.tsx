@@ -239,8 +239,8 @@ const calculateTaxNewRegime = (income: Number) => {
 }
 
 
-const calculateTaxOldRegime = (income: Number) => {
-  console.log("Income: ", 'test')
+const calculateTaxOldRegime = (income: Number, age : 'individual' | 'senior' | 'super-senior') => {
+  console.log("ageee: ", 'test')
   const taxableIncome = Math.max(0, Number(income) - STANDARD_DEDUCTION_OLD_REGIME)
 
   let remainingIncome = taxableIncome
@@ -256,7 +256,7 @@ const calculateTaxOldRegime = (income: Number) => {
   if (remainingIncome > 0) {
     const chunk5 = Math.min(50000, remainingIncome)
     remainingIncome -= chunk5
-    totalTax += chunk5 * 0.05
+    totalTax += age === 'individual' ?  chunk5 * 0.05 : 0
     calculation += ` + (4L * 5%)`
   }
 
@@ -265,7 +265,7 @@ const calculateTaxOldRegime = (income: Number) => {
   if (remainingIncome > 0) {
     const chunk10 = Math.min(200000, remainingIncome)
     remainingIncome -= chunk10
-    totalTax += chunk10 * 0.05
+    totalTax += age === 'individual' || age === 'senior' ? chunk10 * 0.05 :  0
     calculation += ` + (${(chunk10 / 100000)}L * 10%)`
   }
 
@@ -300,7 +300,9 @@ const calculateTaxOldRegime = (income: Number) => {
 export default function Calculator() {
 
   const [financialYear, setFinancialYear] = useState('FY-25-26');
+  const [age, setAge] = useState<'individual' | 'senior' | 'super-senior'>("individual");
 
+  console.log('AGE   ', age);
   const [incomeDetails, setIncomeDetails] = useState<IncomeDetails>({
     annual: '',
     interest: '',
@@ -335,10 +337,7 @@ export default function Calculator() {
   const [deductionsOthers, setDeductionsOthers] = useState({
     hraUs1013A: '',
     employeeContributionToNpsUs80ccd1B: '',
-    interestOnHousingLoanSection24: '',
     savingsAccountInterestSection80tta: '',
-    professionalTax: '',
-    donationUs80G: '',
     others: '',
   });
 
@@ -364,17 +363,16 @@ export default function Calculator() {
   const deduction80C = calculateDeduction(deductions80C);
   const deduction80D = calculateDeduction(deductions80D);
   const deductionOthers = calculateDeduction(deductionsOthers);
-  const deductionsOldRegime = (Math.min(150000, deduction80C) + Math.min(0, deduction80D) + Math.max(0, deductionOthers));
+  const deductionsOldRegime = (Math.min(150000, deduction80C) + Math.min(50000, deduction80D) + Math.max(0, deductionOthers));
 
   const netIncome = incomeT - deductionsOldRegime;
 
   const newTax = financialYear === 'FY-25-26' ? calculateTaxNewRegime(incomeT) : calculateTaxNewRegimeolD(incomeT);
-  const oldTax = calculateTaxOldRegime(netIncome);
+  const oldTax = calculateTaxOldRegime(netIncome, age);
 
 
   const taxDifference = oldTax.totalTax - newTax.totalTax;
 
-  const [age, setAge] = useState<string>("individual");
 
   const incomeData = [
     {
@@ -407,6 +405,7 @@ export default function Calculator() {
     },
   ]
 
+  // MAX DEDUCTIONS - 1.5L
   const deductionData80C = [
     {
       name: "Life Insurance Premium",
@@ -473,6 +472,7 @@ export default function Calculator() {
     },
   ]
 
+  // MAX DEDUCTIONS - 25,000 (Seniors 50,000) - 5000 (health checkup)
   const deductionData80D = [
     {
       name: "For Self and Family",
@@ -512,40 +512,21 @@ export default function Calculator() {
       handleChange: (e: ChangeEvent<HTMLInputElement>) => setDeductionsOthers({ ...deductionsOthers, hraUs1013A: e.target.value }),
       placeholder: 'Enter amount for HRA u/s 10 (13A)'
     },
+    // max 50,000
     {
       name: "Employee Contribution to NPS u/s 80CCD(1B)",
       value: deductionsOthers.employeeContributionToNpsUs80ccd1B,
       htmlFor: 'employeeContributionToNpsUs80ccd1B',
-      handleChange: (e: ChangeEvent<HTMLInputElement>) => setDeductionsOthers({ ...deductionsOthers, employeeContributionToNpsUs80ccd1B: e.target.value }),
+      handleChange: (e: ChangeEvent<HTMLInputElement>) => setDeductionsOthers({ ...deductionsOthers, employeeContributionToNpsUs80ccd1B: (Math.max(50000, Number(e.target.value)) || 0).toString() }),
       placeholder: 'Enter amount for Employee Contribution to NPS u/s 80CCD(1B)'
     },
-    {
-      name: "Interest on Housing Loan Section 24",
-      value: deductionsOthers.interestOnHousingLoanSection24,
-      htmlFor: 'interestOnHousingLoanSection24',
-      handleChange: (e: ChangeEvent<HTMLInputElement>) => setDeductionsOthers({ ...deductionsOthers, interestOnHousingLoanSection24: e.target.value }),
-      placeholder: 'Enter amount for Interest on Housing Loan Section 24'
-    },
+    // Max 10,000
     {
       name: "Savings Account Interest (Section 80TTA)",
       value: deductionsOthers.savingsAccountInterestSection80tta,
       htmlFor: 'savingsAccountInterestSection80tta',
-      handleChange: (e: ChangeEvent<HTMLInputElement>) => setDeductionsOthers({ ...deductionsOthers, savingsAccountInterestSection80tta: e.target.value }),
+      handleChange: (e: ChangeEvent<HTMLInputElement>) => setDeductionsOthers({ ...deductionsOthers, savingsAccountInterestSection80tta: (Math.max(10000, Number(e.target.value)) || 0).toString() }),
       placeholder: 'Enter amount for Savings Account Interest (Section 80TTA)'
-    },
-    {
-      name: "Professional Tax",
-      value: deductionsOthers.professionalTax,
-      htmlFor: 'professionalTax',
-      handleChange: (e: ChangeEvent<HTMLInputElement>) => setDeductionsOthers({ ...deductionsOthers, professionalTax: e.target.value }),
-      placeholder: 'Enter amount for Professional Tax'
-    },
-    {
-      name: "Donation u/s 80G",
-      value: deductionsOthers.donationUs80G,
-      htmlFor: 'donationUs80G',
-      handleChange: (e: ChangeEvent<HTMLInputElement>) => setDeductionsOthers({ ...deductionsOthers, donationUs80G: e.target.value }),
-      placeholder: 'Enter amount for Donation u/s 80G'
     },
     {
       name: "Other Deductions",
@@ -624,7 +605,7 @@ export default function Calculator() {
 
                 <div className="grid gap-2">
                   <Label htmlFor="age">Age Group</Label>
-                  <Select value={age} onValueChange={(value) => setAge(value)}>
+                  <Select value={age} onValueChange={(value : 'individual' | 'senior' | 'super-senior') => setAge(value)}>
                     <SelectTrigger className="w-full border-b-4 border-gray-200 rounded-lg focus:outline-none focus:ring-0 focus:border-black-500 py-5">
                       <SelectValue placeholder="Select age group" />
                     </SelectTrigger>

@@ -30,7 +30,7 @@ export default function Navbar() {
               <Link href="/">Calculator</Link>
             </Button>
 
-            <Button variant="ghost" asChild>
+            {/* <Button variant="ghost" asChild>
               <Link href="/how-it-works">How it works?</Link>
             </Button>
 
@@ -40,7 +40,7 @@ export default function Navbar() {
                 <Table className="h-4 w-4" />
                 Reference
               </Link>
-            </Button>
+            </Button> */}
 
 
             {/* <HRACalculator/> */}
