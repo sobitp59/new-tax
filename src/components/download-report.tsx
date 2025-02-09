@@ -1,16 +1,10 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import dynamic from "next/dynamic"
+
 import { Button } from "@/components/ui/button"
 import { DownloadIcon, FileDown } from "lucide-react"
 
-// Dynamically import PDFDownloadLink with no SSR
-const PDFDownloadLink = dynamic(() => import("@react-pdf/renderer").then((mod) => mod.PDFDownloadLink), { ssr: false, loading: () => <p>Loading...</p>, })
-
-
-// Dynamically import PDF Document component
-const TaxPDFDocument = dynamic(() => import("./pdf-document").then((mod) => mod.TaxPDFDocument), { ssr: false, loading: () => <p>Loading...</p>, })
 
 interface DownloadReportProps {
   income: number
