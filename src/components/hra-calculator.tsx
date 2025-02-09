@@ -10,7 +10,7 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet"
 
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
 
@@ -273,6 +273,12 @@ export function HRAChart({exemption, taxable} : HRAChartProps) {
                     axisLine={false}
                 //   tickFormatter={(value) => value.slice(0, 3)}
                 />
+                        <YAxis tickFormatter={(value) =>
+                                            new Intl.NumberFormat("en-IN", {
+                                              notation: "compact",
+                                              compactDisplay: "short",
+                                            }).format(value)
+                                          } />
                 <ChartTooltip content={<ChartTooltipContent />} />
                 <Bar dataKey="exemption" fill="var(--color-exemption)" radius={4} />
                 <Bar dataKey="taxable" fill="var(--color-taxable)" radius={4} />

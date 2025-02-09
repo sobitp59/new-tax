@@ -27,7 +27,6 @@ interface DownloadReportProps {
 
 export default function DownloadReport(props: DownloadReportProps) {
 
-  console.log('PROPS  ', props);
 
   const [isClient, setIsClient] = useState(false)
 
