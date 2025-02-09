@@ -64,7 +64,7 @@ export function HRACalculator() {
       console.log('HRA DETAILS', hraData);
 
     //   function to calculate hra
-    const CalculateHRA = (basicSalary: number, dearness: number, hra: number, rent: number, isTierOneCities: boolean) => {
+    const CalculateHRA = (basicSalary: number, dearness: number, hra: number, rent: number) => {
         const basicSalaryReceived = Number(basicSalary);
         const dearnessReceived = Number(dearness);
         const hraReceived = Number(hra);
@@ -111,13 +111,11 @@ export function HRACalculator() {
     const  {
         salaryBasedOnTierOfCities, 
         totalRentPaid, 
-        totalDearness,
-        totalBasicSalary,
         totalHra,
         hraChargeableOfTax,
         exmptedHra,
         rentPaidInExcessOf10PercentOfSalary
-    } = CalculateHRA(Number(hraData.basic) || 0, Number(hraData.dearness) || 0, Number(hraData.hra) || 0, Number(hraData.rent) || 0, hraData.isTierOneCities);  
+    } = CalculateHRA(Number(hraData.basic) || 0, Number(hraData.dearness) || 0, Number(hraData.hra) || 0, Number(hraData.rent) || 0);  
 
     return (
         <Sheet >
@@ -228,21 +226,6 @@ export function HRACalculator() {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-const chartData = [
-    { hra: "Home Rate Allowance", exemption: 180000, taxable: 120000 },
-]
 
 const chartConfig = {
     exemption: {

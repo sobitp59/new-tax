@@ -19,7 +19,7 @@ interface DownloadReportProps {
   }
 }
 
-export default function DownloadReport(props: DownloadReportProps) {
+export default function DownloadReport() {
 
 
   const [isClient, setIsClient] = useState(false)

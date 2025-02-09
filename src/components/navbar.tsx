@@ -1,8 +1,6 @@
 import Link from "next/link"
-import { Table } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { WordRotate } from "./word-rotate"
-import { HRACalculator } from "./hra-calculator"
 
 export default function Navbar() {
   return (

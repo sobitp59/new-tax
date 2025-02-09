@@ -23,11 +23,8 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs"
 import { ScrollArea } from "./ui/scroll-area"
-import dynamic from "next/dynamic"
 import { HRACalculator } from "./hra-calculator"
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "./ui/chart"
-
-const DownloadReport = dynamic(() => import("@/components/download-report"), { ssr: false, loading: () => <p>Loading...</p>, })
 
 const CHUNK_SIZE = 400000
 const STANDARD_DEDUCTION_NEW_REGIME = 75000
@@ -66,7 +63,7 @@ interface DeductionDetails {
 
 
 // FY : 2025-26
-const calculateTaxNewRegimeolD = (income: Number) => {
+const calculateTaxNewRegimeolD = (income: number) => {
   const taxableIncome = Math.max(0, Number(income) - STANDARD_DEDUCTION_NEW_REGIME)
 
 
@@ -232,7 +229,7 @@ const calculateTaxNewRegime = (income: Number) => {
 }
 
 
-const calculateTaxOldRegime = (income: Number, age : 'individual' | 'senior' | 'super-senior') => {
+const calculateTaxOldRegime = (income: number, age : 'individual' | 'senior' | 'super-senior') => {
   console.log("ageee: ", 'test')
   const taxableIncome = Math.max(0, Number(income) - STANDARD_DEDUCTION_OLD_REGIME)
 
