@@ -4,7 +4,7 @@ import { ChangeEvent, useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Bar, BarChart, CartesianGrid, ResponsiveContainer, XAxis, YAxis } from "recharts"
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
 
 import {
   Select,
@@ -16,27 +16,20 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-
-import { Button } from "@/components/ui/button"
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
-import Info from "./info"
-import { DownloadIcon } from "lucide-react"
 import { ScrollArea } from "./ui/scroll-area"
 import dynamic from "next/dynamic"
 import { HRACalculator } from "./hra-calculator"
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "./ui/chart"
-// import DownloadReport from "./download-report"
 
 const DownloadReport = dynamic(() => import("@/components/download-report"), { ssr: false, loading: () => <p>Loading...</p>, })
 
 const CHUNK_SIZE = 400000
-const STANDARD_DEDUCTION = 75000
-
 const STANDARD_DEDUCTION_NEW_REGIME = 75000
 const STANDARD_DEDUCTION_OLD_REGIME = 50000
 
@@ -721,11 +714,7 @@ export default function Calculator() {
       <Card className="border-b-4 border-gray-200 rounded-lg w-full col-span-3 w-full">
         <CardHeader className="w-full flex flex-row justify-between items-center">
           <CardTitle className="flex flex-col justify-start gap-1">Your Tax Calculation Report for {financialYear} <br /> <span className="text-sm font-normal text-gray-400">Click on the download button to download the report</span></CardTitle>
-          {/* <Button variant={'ghost'} className="bg-white border-2 w-12 h-12 border-b-4 border-gray-200 rounded-lg hover:bg-gray-100 hover:border-gray-300 ">
-            <DownloadIcon color="grey" fontWeight={'bolder'} />
-          </Button> */}
-
-          <DownloadReport
+          {/* <DownloadReport
             income={1000000}
             effectiveIncome={2000000}
             newRegime={{
@@ -736,7 +725,7 @@ export default function Calculator() {
               calculation: '232323',
               totalTax: 1000
             }}
-          />
+          /> */}
         </CardHeader>
 
 
@@ -753,25 +742,12 @@ export default function Calculator() {
               <section className="flex flex-col gap-4 p-4 bg-white border-[1.5px] border-b-4  border-gray-200 rounded-lg w-full">
                 <div >
                   <h3 className="font-semibold mb-2">New Regime <br />
-                    <span className="text-sm font-normal text-gray-400">Lorem ipsum dolor sit amet.</span>
+                    <span className="text-sm font-normal text-gray-400">Your tax calculation report for {financialYear} under New Regime</span>
                   </h3>
                   <section className="w-full grid lg:grid-cols-2 gap-4 justify-between items-center">
 
                     <div className="h-[300px] w-full ">
-                      {/* <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={chartDataNewRegime} className="p-6">
-                          <XAxis dataKey="name" />
-                          <YAxis tickFormatter={(value) =>
-                            new Intl.NumberFormat("en-IN", {
-                              notation: "compact",
-                              compactDisplay: "short",
-                            }).format(value)
-                          } />
-                          <Bar dataKey="value" fill={"#22c55e"} />
-                        </BarChart>
-                      </ResponsiveContainer> */}
-
-                      <ChartContainer config={chartConfig} className="h-full w-full p-3 lg:p-2">
+                       <ChartContainer config={chartConfig} className="h-full w-full p-3 lg:p-2">
                         <BarChart accessibilityLayer data={[{ tax: "New Tax Regime", taxableIncome: newTax.taxableIncome, totalTax: newTax.totalTax }]}>
                           <CartesianGrid vertical={false} />
                           <XAxis
@@ -798,7 +774,7 @@ export default function Calculator() {
                     <section className="w-full grid grid-cols-2 gap-4 justify-between items-center">
                       <div className="flex flex-col justify-between  h-[100px] border-[1.5px] border-b-4  border-gray-200 rounded-lg p-2">
                         <h3 className="text-sm">Total Tax Payable</h3>
-                        <p className="text-lg font-semibold">{newTax.totalTax === 0 && 'No tax to pay'} ₹{Number(newTax.totalTax).toLocaleString('en-IN')}</p>
+                        <p className="text-lg font-semibold"> ₹{Number(newTax.totalTax).toLocaleString('en-IN')}</p>
                       </div>
                       <div className="flex flex-col justify-between h-[100px] border-[1.5px] border-b-4  border-gray-200 rounded-lg p-2">
                         <h3 className="text-sm">Total Taxable Income</h3>
@@ -833,25 +809,12 @@ export default function Calculator() {
               <section className="flex flex-col gap-4 p-4 bg-white border-[1.5px] border-b-4 mt-6  border-gray-200 rounded-lg w-full">
                 <div>
                   <h3 className="font-semibold mb-2">Old Regime <br />
-                    <span className="text-sm font-normal text-gray-400">Lorem ipsum dolor sit amet.</span>
+                  <span className="text-sm font-normal text-gray-400">Your tax calculation report for {financialYear} under Old Regime</span>
                   </h3>
 
                   <section className="w-full grid lg:grid-cols-2 gap-4 justify-between items-center">
 
                     <div className="h-[300px] w-full ">
-                      {/* <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={chartDataNewRegime} className="p-6">
-                          <XAxis dataKey="name" />
-                          <YAxis tickFormatter={(value) =>
-                            new Intl.NumberFormat("en-IN", {
-                              notation: "compact",
-                              compactDisplay: "short",
-                            }).format(value)
-                          } />
-                          <Bar dataKey="value" fill={"#22c55e"} />
-                        </BarChart>
-                      </ResponsiveContainer> */}
-
                       <ChartContainer config={chartConfig} className="h-full w-full p-3 lg:p-2">
                         <BarChart accessibilityLayer data={[{ tax: "Old Tax Regime", taxableIncome: oldTax.taxableIncome, totalTax: oldTax.totalTax }]}>
                           <CartesianGrid vertical={false} />
