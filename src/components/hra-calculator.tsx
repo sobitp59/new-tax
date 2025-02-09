@@ -184,7 +184,7 @@ export function HRACalculator() {
                                 {/* const hraChargeableOfTax = Math.min(hra, salaryPercentage, rentPaidInExcessOf10PercentOfSalary); */}
 
 
-                                <section className="mt-10">
+                                <section className="mt-20">
                                     <section className="w-full mt-6 grid grid-cols-2 gap-4 justify-between items-center">
                                         <div className="flex flex-col justify-between  h-[100px] border-[1.5px] border-b-4  border-gray-200 rounded-lg p-2">
                                             <h3 className="text-sm">Actual HRA Received (in ₹)</h3>

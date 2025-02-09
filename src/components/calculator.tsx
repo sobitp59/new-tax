@@ -748,7 +748,7 @@ export default function Calculator() {
                   </h3>
                   <section className="w-full grid lg:grid-cols-2 gap-4 justify-between items-center">
 
-                    <div className="h-[300px]  w-[300px] lg:w-full ">
+                    <div className="h-[300px]   w-[250px] lg:w-full ">
                        <ChartContainer config={chartConfig} className="h-full w-full p-3 lg:p-2">
                         <BarChart accessibilityLayer data={[{ tax: "New Tax Regime", taxableIncome: newTax.taxableIncome, totalTax: newTax.totalTax }]}>
                           <CartesianGrid vertical={false} />
@@ -773,7 +773,7 @@ export default function Calculator() {
                     </div>
 
 
-                    <section className="w-full grid grid-cols-1 lg:grid-cols-2 gap-4 justify-between items-center">
+                    <section className="w-full grid grid-cols-2 gap-4 justify-between items-center">
                       <div className="flex flex-col justify-between  h-[100px] border-[1.5px] border-b-4  border-gray-200 rounded-lg p-2">
                         <h3 className="text-sm">Total Tax Payable</h3>
                         <p className="text-lg font-semibold"> ₹{Number(newTax.totalTax).toLocaleString('en-IN')}</p>
@@ -816,7 +816,7 @@ export default function Calculator() {
 
                   <section className="w-full grid lg:grid-cols-2 gap-4 justify-between items-center">
 
-                    <div className="h-[300px] w-[300px] lg:w-full  ">
+                    <div className="h-[300px] w-[250px] lg:w-full  ">
                       <ChartContainer config={chartConfig} className="h-full w-full p-3 lg:p-2">
                         <BarChart accessibilityLayer data={[{ tax: "Old Tax Regime", taxableIncome: oldTax.taxableIncome, totalTax: oldTax.totalTax }]}>
                           <CartesianGrid vertical={false} />
@@ -839,7 +839,7 @@ export default function Calculator() {
                       </ChartContainer>
                     </div>
 
-                    <section className="w-full grid grid-cols-1 lg:grid-cols-2 gap-4 justify-between items-center">
+                    <section className="w-full grid grid-cols-2 gap-4 justify-between items-center">
                       <div className=" flex flex-col justify-between  h-[100px] border-[1.5px] border-b-4  border-gray-200 rounded-lg p-2">
                         <h3 className="text-sm">Total Tax Payable</h3>
                         <p className="text-lg font-semibold">₹{Number(oldTax.totalTax).toLocaleString('en-IN')}</p>
