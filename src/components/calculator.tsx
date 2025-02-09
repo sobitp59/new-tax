@@ -38,30 +38,6 @@ interface IncomeDetails {
   others: string;
 }
 
-interface DeductionDetails {
-  lifeInsurancePremium: string;
-  publicProvidentFund: string;
-  contributionToProvidentFund: string;
-  taxSavingFixedDeposit: string;
-  repaymentOfPrincipalOnHousingLoan: string;
-  ulipTaxSavingInvestmentPlans: string;
-  equityLinkedSavingsSchemes: string;
-  employeeContributionToNpsUs80ccd1: string;
-  tuitionFees: string;
-  selfAndFamily: string;
-  preventiveCheckup: string;
-  parentsBelow60Years: string;
-  parentsAbove60Years: string;
-  hraUs1013A: string;
-  employeeContributionToNpsUs80ccd1B: string;
-  interestOnHousingLoanSection24: string;
-  savingsAccountInterestSection80tta: string;
-  professionalTax: string;
-  donationUs80G: string;
-  others: string;
-}
-
-
 // FY : 2025-26
 const calculateTaxNewRegimeolD = (income: number) => {
   const taxableIncome = Math.max(0, Number(income) - STANDARD_DEDUCTION_NEW_REGIME)
